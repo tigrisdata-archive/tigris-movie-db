@@ -8,7 +8,7 @@ const main = async () => {
   const client = new Tigris();
   const db = client.getDatabase();
   await db.initializeBranch();
-  db.createOrUpdateCollection<Movie>(Movie);
+  await db.createOrUpdateCollection<Movie>(Movie);
 };
 
 main()
