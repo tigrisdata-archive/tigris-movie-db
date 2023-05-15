@@ -13,6 +13,7 @@ export default async function Home({
     searchParams.page !== undefined ? Number(searchParams.page) * 100 : 0;
   const moviesResult = moviesCollection.findMany({
     options: new FindQueryOptions(100, skip),
+    sort: { field: "year", order: "$desc" },
   });
   const movies = await moviesResult.toArray();
 
