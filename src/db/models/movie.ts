@@ -13,8 +13,8 @@ export class Movie {
   @Field()
   title!: string;
 
-  @Field(TigrisDataTypes.INT64)
-  year!: string;
+  @Field(TigrisDataTypes.NUMBER)
+  year!: number;
 
   @Field({ elements: TigrisDataTypes.STRING })
   cast?: Array<string>;
