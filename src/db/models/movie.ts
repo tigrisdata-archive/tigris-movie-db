@@ -20,6 +20,7 @@ export class Movie {
   year!: number;
 
   @Field({ elements: TigrisDataTypes.STRING })
+  @SearchField({ elements: TigrisDataTypes.STRING, facet: true })
   cast?: Array<string>;
 
   @Field()
