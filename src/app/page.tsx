@@ -22,7 +22,7 @@ export default async function Home({
   const nextPage = movies.length === 100 ? currentPage + 1 : -1;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex w-8/12 m-auto min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full items-center justify-between text-xl font-bold lg:flex">
         <div className="text-3xl">
           <a href="/">🎥 Tigris Movie Database</a>
