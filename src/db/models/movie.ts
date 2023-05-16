@@ -15,9 +15,9 @@ export class Movie {
   @SearchField({ sort: true })
   title!: string;
 
-  @Field(TigrisDataTypes.INT64)
+  @Field(TigrisDataTypes.NUMBER)
   @SearchField({ sort: true, facet: true })
-  year!: string;
+  year!: number;
 
   @Field({ elements: TigrisDataTypes.STRING })
   cast?: Array<string>;
