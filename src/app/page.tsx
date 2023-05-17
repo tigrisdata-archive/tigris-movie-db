@@ -1,3 +1,5 @@
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import { Movie } from "@/db/models/movie";
 import { FindQueryOptions, Tigris } from "@tigrisdata/core";
 import Image from "next/image";
@@ -24,33 +26,11 @@ export default async function Home({
   const nextPage = movies.length === 100 ? currentPage + 1 : -1;
 
   return (
-    <main className="flex xl:w-10/12 m-auto min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full items-center justify-between text-xl font-bold lg:flex">
-        <div className="text-3xl">
-          <a href="/">🎥 Tigris Movie Database</a>
-        </div>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://www.tigrisdata.com.com?utm_source=create-next-app&utm_medium=github-repo&utm_campaign=tigris-movie-db"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/tigris.svg"
-              alt="Tigris Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <Header />
 
       <div className="mt-10 flex-col w-full">
-        {/* Search form goes here  */}
+        {/* Search <form /> goes here  */}
         <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
           {movies.map((movie) => {
             return (
@@ -92,12 +72,7 @@ export default async function Home({
         </div>
       </div>
 
-      <div className="mb-32">
-        Made with 🐯❤️ by{" "}
-        <a href="https://www.tigrisdata.com?utm_source=create-next-app&utm_medium=github-repo&utm_campaign=tigris-movie-db">
-          Tigris Data
-        </a>
-      </div>
-    </main>
+      <Footer />
+    </>
   );
 }
