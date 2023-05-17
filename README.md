@@ -2,17 +2,43 @@
 
 An example of using Tigris Database + Search with a Movie dataset.
 
-## Seed
+## Install dependencies
 
-Run this **only once**:
+```sh
+npm i
+```
+
+Or the equivalent with other package managers.
+
+## Seed the database
+
+Run this **only once** as it downloads a large JSON file and then using the
+Tigris CLI to populate the Tigris project database:
 
 ```sh
 npm run tigris:seed
 ```
 
+## Create a Tigris project
+
+The following command uses the Tigris CLI to log you into Tigris Cloud (you can
+signup if you don't already have an account), create a project, and save your
+Tigris project configuration to a `.env.local` file.
+
+```sh
+npm run tigris:init
+```
+
+By default, the name `tigris-movie-db` is as the project name. You can override
+this by passing in `--project={name}` flag. For example:
+
+```sh
+npm run tigris:init --project awesome-project
+```
+
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
@@ -25,31 +51,27 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 result.
 
-You can start editing the page by modifying `app/page.tsx`. The page
-auto-updates as you edit the file.
+## Add Tigris Automatic Database to Search Synchronization
 
-This project uses
-[`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to
-automatically optimize and load Inter, a custom Google Font.
+If you'd just like to see Tigris Search added check out the `add-search` branch:
+
+```sh
+git checkout add-search
+```
+
+If you'd like to walk through adding search, follow the
+[Tigris Automatic Database to Search Synchronization video](https://www.youtube.com/watch?v=LZVnqUhd-eQ&ab_channel=Tigris).
+
+[![Tigris Automatic Database to Search Synchronization on YouTube](./docs/database-search-sync-video.png)](https://www.youtube.com/watch?v=LZVnqUhd-eQ&ab_channel=Tigris)
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about Tigris, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out
-[the Next.js GitHub repository](https://github.com/vercel/next.js/) - your
-feedback and contributions are welcome!
+- [Tigris Database TypeScript documentation](https://www.tigrisdata.com/docs/sdkstools/typescript/database/).
+- [Tigris Search TypeScript documentation](https://www.tigrisdata.com/docs/sdkstools/typescript/search/).
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
-
-Check out our
-[Next.js deployment documentation](https://nextjs.org/docs/deployment) for more
-details.
+Deploy the Tigris Movie Database to the
+[Vercel Platform](https://vercel.com/new).
