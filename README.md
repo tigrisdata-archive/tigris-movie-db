@@ -2,6 +2,14 @@
 
 An example of using Tigris Database + Search with a Movie dataset.
 
+## Install dependencies
+
+```sh
+npm i
+```
+
+Or the equivalent with other package managers.
+
 ## Seed the database
 
 Run this **only once** as it downloads a large JSON file and then using the
