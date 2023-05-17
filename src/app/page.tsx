@@ -9,8 +9,10 @@ export default async function Home({
 }) {
   const tigris = new Tigris();
   const moviesCollection = tigris.getDatabase().getCollection<Movie>(Movie);
+
   const skip =
     searchParams.page !== undefined ? Number(searchParams.page) * 100 : 0;
+
   const moviesResult = moviesCollection.findMany({
     options: new FindQueryOptions(100, skip),
   });
@@ -22,7 +24,7 @@ export default async function Home({
   const nextPage = movies.length === 100 ? currentPage + 1 : -1;
 
   return (
-    <main className="flex w-8/12 m-auto min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex xl:w-10/12 m-auto min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full items-center justify-between text-xl font-bold lg:flex">
         <div className="text-3xl">
           <a href="/">🎥 Tigris Movie Database</a>
@@ -48,7 +50,8 @@ export default async function Home({
       </div>
 
       <div className="mt-10 flex-col w-full">
-        <div className="grid grid-cols-4 gap-4">
+        {/* Search form goes here  */}
+        <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
           {movies.map((movie) => {
             return (
               <div
