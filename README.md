@@ -23,10 +23,9 @@ npm i
 
 Or the equivalent with other package managers.
 
-## Seed the database
+## Seed
 
-Run this **only once** as it downloads a large JSON file and then uses the
-Tigris CLI to populate the Tigris project database:
+Run this **only once**:
 
 ```sh
 npm run tigris:seed
