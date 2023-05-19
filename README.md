@@ -62,7 +62,7 @@ git checkout add-search
 If you'd like to walk through adding search, follow the
 [Tigris Automatic Database to Search Synchronization video](https://www.youtube.com/watch?v=LZVnqUhd-eQ&ab_channel=Tigris).
 
-[![Tigris Automatic Database to Search Synchronization on YouTube](./docs/database-search-sync-video.png)](https://www.youtube.com/watch?v=LZVnqUhd-eQ&ab_channel=Tigris)
+[![Tigris Automatic Database to Search Synchronization on YouTube](docs/database-search-sync-video.png)](https://www.youtube.com/watch?v=LZVnqUhd-eQ&ab_channel=Tigris)
 
 ## Learn More
 
