@@ -114,6 +114,7 @@ export default async function SearchPage(props: SearchPageProps) {
         <h2 className="text-lg mt-10 mb-5">
           <a href="/">Movies</a>
           {props.genre && <span> &gt; {props.genre}</span>}
+          {props.cast && <span> &gt; {props.cast}</span>}
         </h2>
         <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
           {movies.length === 0 && (
