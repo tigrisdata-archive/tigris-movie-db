@@ -6,6 +6,7 @@ export default async function Home({
   params: { genre: string; page?: string; q?: string };
 }) {
   return (
+    /* https://github.com/vercel/next.js/issues/42292 */
     /* @ts-expect-error Server Component */
     <SearchPage
       pageNumber={params.page}

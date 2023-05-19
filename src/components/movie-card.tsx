@@ -1,7 +1,20 @@
+"use client";
+
 import { Movie } from "@/db/models/movie";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 export const MovieCard = ({ movie }: { movie: Movie }) => {
+  const [extractExpanded, setExtractExpanded] = useState<boolean>(false);
+  const extractRef = useRef<HTMLParagraphElement>(null);
+  const [expandedHeight, setExpandedHeight] = useState<number>(400);
+
+  useEffect(() => {
+    if (extractRef.current) {
+      setExpandedHeight(extractRef.current.clientHeight);
+    }
+  }, []);
+
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex align-middle justify-center h-[385px] overflow-hidden">
@@ -31,9 +44,33 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
           })}
         </div>
         {movie.extract && (
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            {movie.extract}
-          </p>
+          <>
+            <div
+              className={`overflow-clip transition-height duration-1000 ${
+                extractExpanded ? `h-[${expandedHeight}px]` : "h-[200px]"
+              }`}
+            >
+              <p
+                ref={extractRef}
+                className={`mb-3 font-normal text-gray-700 dark:text-gray-400`}
+              >
+                {movie.extract}
+              </p>
+            </div>
+            {/* TODO: change 300 to dynamically calculated based on div and p heights */}
+            {movie.extract.length > 300 && (
+              <div className="flex justify-end">
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setExtractExpanded(!extractExpanded);
+                  }}
+                >
+                  {extractExpanded ? "Close" : "Read more..."}
+                </span>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

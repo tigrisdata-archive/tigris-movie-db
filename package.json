@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "tigris:seed": "npm run tigris:setup && curl https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json --output ./scripts/movies.json && cat ./scripts/movies.json | tigris import --append -p tigris-movie-db movies",
+    "tigris:init": "TIGRIS_PROJECT=\"${npm_config_project:=tigris-movie-db} && tigris create project $TIGRIS_PROJECT -o . --create-env-file && mv .env .env.local",
+    "tigris:seed": "TIGRIS_PROJECT=\"${npm_config_project:=tigris-movie-db}\" && TIGRIS_BRANCH=\"${npm_config_branch:=main}\" && echo \"project:$TIGRIS_PROJECT\"/\"branch:$TIGRIS_BRANCH\" && npm run tigris:setup && curl https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json --output ./scripts/movies.json && cat ./scripts/movies.json | tigris import --append --branch=$TIGRIS_BRANCH --project $TIGRIS_PROJECT movies",
     "tigris:setup": "npx ts-node ./scripts/setup.ts",
     "predev": "npm run tigris:setup",
     "dev": "next dev",
