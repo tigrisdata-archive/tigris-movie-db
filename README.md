@@ -1,6 +1,19 @@
 # Tigris Movie Database
 
-An example of using Tigris Database + Search with a Movie dataset.
+An example of using Tigris Database + Search with a Movie dataset. Built with
+Next.js and Tailwind CSS.
+
+The application loads 35,000 movies into a Tigris Database `movies` collection,
+automatically creating a Tigris Search index for the collection, enabling search
+functionality in the application.
+
+The repo contains two branches:
+
+1. [`main`](tree/main) - the branch with Database to Search in place with the
+   application refactored and optimized to show best practices with Tigris and
+   Next.js.
+2. [`db-only`](tree/db-only) - the application with just the basic database
+   functionality. The application is in a raw state and has not been refactored.
 
 ## Install dependencies
 
@@ -10,10 +23,9 @@ npm i
 
 Or the equivalent with other package managers.
 
-## Seed the database
+## Seed
 
-Run this **only once** as it downloads a large JSON file and then using the
-Tigris CLI to populate the Tigris project database:
+Run this **only once**:
 
 ```sh
 npm run tigris:seed

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "tigris:seed": "npm run tigris:setup && curl https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json --output ./scripts/movies.json && cat ./scripts/movies.json | tigris import --append -p tigris-movie-db movies",
-    "tigris:init": "TIGRIS_PROJECT=\"${npm_config_project:=tigris-movie-db}\" && tigris create project $TIGRIS_PROJECT -o . --create-env-file && mv .env .env.local",
+    "tigris:init": "TIGRIS_PROJECT=\"${npm_config_project:=tigris-movie-db} && tigris create project $TIGRIS_PROJECT -o . --create-env-file && mv .env .env.local",
+    "tigris:seed": "TIGRIS_PROJECT=\"${npm_config_project:=tigris-movie-db}\" && TIGRIS_BRANCH=\"${npm_config_branch:=main}\" && echo \"project:$TIGRIS_PROJECT\"/\"branch:$TIGRIS_BRANCH\" && npm run tigris:setup && curl https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json --output ./scripts/movies.json && cat ./scripts/movies.json | tigris import --append --branch=$TIGRIS_BRANCH --project $TIGRIS_PROJECT movies",
     "tigris:setup": "npx ts-node ./scripts/setup.ts",
     "predev": "npm run tigris:setup",
     "dev": "next dev",
@@ -14,17 +14,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tigrisdata/core": "^1.1.0",
+    "@tigrisdata/core": "^1.2.3",
     "@types/node": "20.1.4",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
-    "next": "13.4.2",
+    "next": "^13.4.3",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "server-only": "^0.0.1",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   },

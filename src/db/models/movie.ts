@@ -1,6 +1,7 @@
 import {
   Field,
   PrimaryKey,
+  SearchField,
   TigrisCollection,
   TigrisDataTypes,
 } from "@tigrisdata/core";
@@ -11,18 +12,23 @@ export class Movie {
   id?: string;
 
   @Field()
+  @SearchField({ sort: true })
   title!: string;
 
   @Field(TigrisDataTypes.NUMBER)
+  @SearchField({ sort: true, facet: true })
   year!: number;
 
   @Field({ elements: TigrisDataTypes.STRING })
+  @SearchField({ elements: TigrisDataTypes.STRING, facet: true })
   cast?: Array<string>;
 
   @Field()
+  @SearchField()
   extract?: string;
 
   @Field({ elements: TigrisDataTypes.STRING })
+  @SearchField({ elements: TigrisDataTypes.STRING, facet: true })
   genres?: Array<string>;
 
   @Field()
