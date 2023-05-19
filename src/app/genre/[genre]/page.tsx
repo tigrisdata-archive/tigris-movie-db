@@ -17,22 +17,3 @@ export default async function Genre({
     />
   );
 }
-
-export async function generateStaticParams() {
-  const tigris = new Tigris();
-  const moviesCollection = tigris.getDatabase().getCollection<Movie>(Movie);
-  const query: SearchQuery<Movie> = {
-    sort: { field: "year", order: "$desc" },
-    facets: {
-      genres: { size: 1000 },
-    },
-    hitsPerPage: 1,
-  };
-
-  const search = await moviesCollection.search(query, 1);
-
-  // TODO: consider pagination of genre pages
-  return search.facets["genres"].counts.map((facet) => ({
-    genre: facet.value,
-  }));
-}

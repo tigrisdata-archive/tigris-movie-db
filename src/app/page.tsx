@@ -13,5 +13,7 @@ export default async function Home({
 
 export async function generateStaticParams() {
   // TODO: consider pagination of genre pages
+  // Auto-generate the first page so even on a new deploy
+  // it's instant.
   return [{}];
 }

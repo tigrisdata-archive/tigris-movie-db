@@ -6,6 +6,9 @@ import { MovieCard } from "@/components/movie-card";
 import { Movie } from "@/db/models/movie";
 import { Tigris, SearchQuery, Case } from "@tigrisdata/core";
 import Link from "next/link";
+import { cache } from "react";
+
+const PAGE_SIZE = 50;
 
 export type SearchPageProps = {
   pageNumber?: number | string;
@@ -14,59 +17,73 @@ export type SearchPageProps = {
   cast?: string;
 };
 
+const searchMovies = cache(
+  async ({ pageNumber, query, genre, cast }: SearchPageProps) => {
+    const tigris = new Tigris();
+    const moviesCollection = tigris.getDatabase().getCollection<Movie>(Movie);
+
+    const searchQuery: SearchQuery<Movie> = {
+      q: query || undefined,
+      sort: { field: "year", order: "$desc" },
+      hitsPerPage: PAGE_SIZE,
+      options: {
+        collation: { case: Case.CaseInsensitive },
+      },
+      facets: {
+        genres: {
+          size: 100,
+        },
+        cast: {
+          size: 100,
+        },
+      },
+    };
+
+    if (genre) {
+      searchQuery.filter = {
+        genres: genre,
+      };
+    }
+
+    if (cast) {
+      searchQuery.filter = {
+        cast,
+      };
+    }
+
+    const moviesResults = await moviesCollection.search(
+      searchQuery,
+      pageNumber ? Number(pageNumber) : 1
+    );
+    const movies = moviesResults.hits.map((hit) => hit.document);
+    const castFacets: Facet[] = moviesResults.facets["cast"].counts.map(
+      (cast) => {
+        return { count: cast.count, value: cast.value };
+      }
+    );
+    const genreFacets: Facet[] = moviesResults.facets["genres"].counts.map(
+      (genre) => {
+        return { count: genre.count, value: genre.value };
+      }
+    );
+
+    return { movies, castFacets, genreFacets };
+  }
+);
+
 export default async function SearchPage(props: SearchPageProps) {
-  const tigris = new Tigris();
-  const moviesCollection = tigris.getDatabase().getCollection<Movie>(Movie);
-
   const searchTerm = props.query || "";
-
-  const PAGE_SIZE = 50;
-
   const currentPage =
     props.pageNumber === undefined ? 1 : Number(props.pageNumber);
   const prevPage = Math.max(-1, currentPage - 1);
 
-  const query: SearchQuery<Movie> = {
-    q: searchTerm || undefined,
-    sort: { field: "year", order: "$desc" },
-    hitsPerPage: PAGE_SIZE,
-    options: {
-      collation: { case: Case.CaseInsensitive },
-    },
-    facets: {
-      genres: {
-        size: 100,
-      },
-      cast: {
-        size: 100,
-      },
-    },
-  };
+  const { movies, castFacets, genreFacets } = await searchMovies({
+    pageNumber: currentPage,
+    query: searchTerm,
+    cast: props.cast,
+    genre: props.genre,
+  });
 
-  if (props.genre) {
-    query.filter = {
-      genres: props.genre,
-    };
-  }
-
-  if (props.cast) {
-    query.filter = {
-      cast: props.cast,
-    };
-  }
-
-  const moviesResults = await moviesCollection.search(query, currentPage);
-  const movies = moviesResults.hits.map((hit) => hit.document);
-  const castFacets: Facet[] = moviesResults.facets["cast"].counts.map(
-    (cast) => {
-      return { count: cast.count, value: cast.value };
-    }
-  );
-  const genreFacets: Facet[] = moviesResults.facets["genres"].counts.map(
-    (genre) => {
-      return { count: genre.count, value: genre.value };
-    }
-  );
   const nextPage = movies.length === PAGE_SIZE ? currentPage + 1 : -1;
 
   return (
