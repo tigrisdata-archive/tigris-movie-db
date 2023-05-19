@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import { MovieCard } from "@/components/movie-card";
 import { Movie } from "@/db/models/movie";
 import { Tigris, SearchQuery, Case } from "@tigrisdata/core";
+import Link from "next/link";
 
 export type SearchPageProps = {
   pageNumber?: number | string;
@@ -112,7 +113,7 @@ export default async function SearchPage(props: SearchPageProps) {
         </ExpandableSection>
 
         <h2 className="text-lg mt-10 mb-5">
-          <a href="/">Movies</a>
+          <Link href="/">Movies</Link>
           {props.genre && <span> &gt; {props.genre}</span>}
           {props.cast && <span> &gt; {props.cast}</span>}
         </h2>
@@ -135,9 +136,9 @@ export default async function SearchPage(props: SearchPageProps) {
           })}
         </div>
         <div className="flex justify-evenly my-10">
-          {currentPage === 2 && <a href={`/`}>Prev</a>}
-          {currentPage > 2 && <a href={`/?page=${prevPage}`}>Prev</a>}
-          {nextPage > 0 && <a href={`/?page=${nextPage}`}>Next</a>}
+          {currentPage === 2 && <Link href={`/`}>Prev</Link>}
+          {currentPage > 2 && <Link href={`/?page=${prevPage}`}>Prev</Link>}
+          {nextPage > 0 && <Link href={`/?page=${nextPage}`}>Next</Link>}
         </div>
       </div>
 
