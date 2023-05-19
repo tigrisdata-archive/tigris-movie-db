@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 import { ExpandableSection } from "./expandable-section";
-
-export type Facet = {
-  value: string;
-  count: number;
-};
+import { Facet } from "@/utils/search-movies";
 
 export type FilterListParams = {
   name: string;

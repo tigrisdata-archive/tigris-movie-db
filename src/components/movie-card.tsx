@@ -2,6 +2,7 @@
 
 import { Movie } from "@/db/models/movie";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export const MovieCard = ({ movie }: { movie: Movie }) => {
@@ -38,7 +39,7 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
           {movie.genres?.map((genre) => {
             return (
               <span key={genre}>
-                <a href={`/genre/${genre}`}>{genre}</a>
+                <Link href={`/genre/${genre}`}>{genre}</Link>
               </span>
             );
           })}

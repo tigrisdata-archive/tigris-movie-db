@@ -10,10 +10,3 @@ export default async function Home({
     <SearchPage pageNumber={searchParams.page} query={searchParams.q} />
   );
 }
-
-export async function generateStaticParams() {
-  // TODO: consider pagination of genre pages
-  // Auto-generate the first page so even on a new deploy
-  // it's instant.
-  return [{}];
-}

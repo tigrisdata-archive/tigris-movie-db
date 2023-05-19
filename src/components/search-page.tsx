@@ -1,12 +1,11 @@
 import { ExpandableSection } from "@/components/expandable-section";
-import { Facet, Filterlist } from "@/components/filter-list";
+import { Filterlist } from "@/components/filter-list";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { MovieCard } from "@/components/movie-card";
 import { Movie } from "@/db/models/movie";
-import { Tigris, SearchQuery, Case } from "@tigrisdata/core";
+import { searchMovies } from "@/utils/search-movies";
 import Link from "next/link";
-import { cache } from "react";
 
 const PAGE_SIZE = 50;
 
@@ -17,60 +16,6 @@ export type SearchPageProps = {
   cast?: string;
 };
 
-const searchMovies = cache(
-  async ({ pageNumber, query, genre, cast }: SearchPageProps) => {
-    const tigris = new Tigris();
-    const moviesCollection = tigris.getDatabase().getCollection<Movie>(Movie);
-
-    const searchQuery: SearchQuery<Movie> = {
-      q: query || undefined,
-      sort: { field: "year", order: "$desc" },
-      hitsPerPage: PAGE_SIZE,
-      options: {
-        collation: { case: Case.CaseInsensitive },
-      },
-      facets: {
-        genres: {
-          size: 100,
-        },
-        cast: {
-          size: 100,
-        },
-      },
-    };
-
-    if (genre) {
-      searchQuery.filter = {
-        genres: genre,
-      };
-    }
-
-    if (cast) {
-      searchQuery.filter = {
-        cast,
-      };
-    }
-
-    const moviesResults = await moviesCollection.search(
-      searchQuery,
-      pageNumber ? Number(pageNumber) : 1
-    );
-    const movies = moviesResults.hits.map((hit) => hit.document);
-    const castFacets: Facet[] = moviesResults.facets["cast"].counts.map(
-      (cast) => {
-        return { count: cast.count, value: cast.value };
-      }
-    );
-    const genreFacets: Facet[] = moviesResults.facets["genres"].counts.map(
-      (genre) => {
-        return { count: genre.count, value: genre.value };
-      }
-    );
-
-    return { movies, castFacets, genreFacets };
-  }
-);
-
 export default async function SearchPage(props: SearchPageProps) {
   const searchTerm = props.query || "";
   const currentPage =
@@ -79,6 +24,7 @@ export default async function SearchPage(props: SearchPageProps) {
 
   const { movies, castFacets, genreFacets } = await searchMovies({
     pageNumber: currentPage,
+    pageSize: PAGE_SIZE,
     query: searchTerm,
     cast: props.cast,
     genre: props.genre,
@@ -131,8 +77,8 @@ export default async function SearchPage(props: SearchPageProps) {
 
         <h2 className="text-lg mt-10 mb-5">
           <Link href="/">Movies</Link>
-          {props.genre && <span> &gt; {props.genre}</span>}
-          {props.cast && <span> &gt; {props.cast}</span>}
+          {props.genre && <span> &gt; Genre &gt; {props.genre}</span>}
+          {props.cast && <span> &gt; Cast &gt; {props.cast}</span>}
         </h2>
         <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
           {movies.length === 0 && (
@@ -149,7 +95,8 @@ export default async function SearchPage(props: SearchPageProps) {
             </div>
           )}
           {movies.map((movie) => {
-            return <MovieCard key={movie.id} movie={movie} />;
+            const pojMovie = Object.assign({}, movie);
+            return <MovieCard key={movie.id} movie={pojMovie} />;
           })}
         </div>
         <div className="flex justify-evenly my-10">
