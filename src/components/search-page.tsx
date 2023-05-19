@@ -10,6 +10,7 @@ export type SearchPageProps = {
   pageNumber?: number | string;
   query?: string;
   genre?: string;
+  cast?: string;
 };
 
 export default async function SearchPage(props: SearchPageProps) {
@@ -44,6 +45,12 @@ export default async function SearchPage(props: SearchPageProps) {
   if (props.genre) {
     query.filter = {
       genres: props.genre,
+    };
+  }
+
+  if (props.cast) {
+    query.filter = {
+      cast: props.cast,
     };
   }
 
@@ -109,6 +116,19 @@ export default async function SearchPage(props: SearchPageProps) {
           {props.genre && <span> &gt; {props.genre}</span>}
         </h2>
         <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+          {movies.length === 0 && (
+            <div>
+              <p>No movies found matching:</p>
+              <ul>
+                {props.query && <li>Query: &quot;{props.query}&quot;</li>}
+                {props.pageNumber && (
+                  <li>Page: &quot;{props.pageNumber}&quot;</li>
+                )}
+                {props.genre && <li>Genre: &quot;{props.genre}&quot;</li>}
+                {props.cast && <li>Cast: &quot;{props.cast}&quot;</li>}
+              </ul>
+            </div>
+          )}
           {movies.map((movie) => {
             return <MovieCard key={movie.id} movie={movie} />;
           })}

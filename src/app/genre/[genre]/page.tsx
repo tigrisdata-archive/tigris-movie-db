@@ -1,6 +1,6 @@
 import SearchPage from "@/components/search-page";
 
-export default async function Home({
+export default async function Genre({
   params,
 }: {
   params: { genre: string; page?: string; q?: string };
