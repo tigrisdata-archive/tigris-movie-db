@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { ExpandableSection } from "./expandable-section";
 import { Facet } from "@/utils/search-movies";
+import { ChevronRight } from "@/icons/chevron-down";
+import { ChevronUp } from "@/icons/chevron-up";
 
 export type FilterListParams = {
   name: string;
@@ -37,8 +39,15 @@ export const Filterlist = (props: FilterListParams) => {
           }}
           className="cursor-pointer font-bold"
         >
-          {listExtended ? <i>Show less</i> : <i>Show more</i>}
-          ...
+          {listExtended ? (
+            <i>
+              Show less <ChevronUp />
+            </i>
+          ) : (
+            <i>
+              Show more <ChevronRight />
+            </i>
+          )}
         </span>
       </div>
     </ExpandableSection>

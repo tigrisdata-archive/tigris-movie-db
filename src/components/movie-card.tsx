@@ -1,9 +1,11 @@
 "use client";
 
 import { Movie } from "@/db/models/movie";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ImageWithFallback } from "./image-with-fallback";
+import { GenreIcon } from "@/icons/genre-icon";
+import { StarIcon } from "@/icons/star-icon";
 
 export const MovieCard = ({ movie }: { movie: Movie }) => {
   const [extractExpanded, setExtractExpanded] = useState<boolean>(false);
@@ -20,9 +22,10 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex align-middle justify-center h-[385px] overflow-hidden">
         <a className="p-4" href={`#${movie.href}`}>
-          <Image
+          <ImageWithFallback
             className="rounded-t-lg"
             src={movie.thumbnail || `/no-image-available.svg`}
+            fallback="/no-image-available.svg"
             width={Number(movie.thumbnail_width || 260)}
             height={Number(movie.thumbnail_height || 385)}
             alt={`Thumbnail for ${movie.title}`}
@@ -35,32 +38,59 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
             {movie.title} ({movie.year})
           </h2>
         </a>
-        <div className="flex gap-3 text-xs mb-2">
-          {movie.genres?.map((genre) => {
-            return (
-              <span key={genre}>
-                <Link href={`/genre/${genre}`}>{genre}</Link>
-              </span>
-            );
-          })}
+        <div className="flex flex-row justify-left gap-3 mb-2">
+          <span className="text-cyan-500">
+            <GenreIcon />
+          </span>
+          <div className="flex gap-3 flex-wrap text-xs items-center">
+            {!movie.genres ||
+              (movie.genres.length === 0 && (
+                <span className="align-middle h-3">Uncategorized</span>
+              ))}
+            {movie.genres?.map((genre) => {
+              return (
+                <span key={genre} className="align-middle h-3">
+                  <Link href={`/genre/${genre}`}>{genre}</Link>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+        <div className="flex flex-row justify-left gap-3 mb-4">
+          <span className="text-cyan-500">
+            <StarIcon />
+          </span>
+          <div className="flex gap-3 flex-wrap text-xs items-center mt-[6px]">
+            {!movie.cast ||
+              (movie.cast.length === 0 && (
+                <span className="align-middle h-3">Unknown</span>
+              ))}
+            {movie.cast?.map((cast) => {
+              return (
+                <span key={cast} className="align-middle h-3">
+                  <Link href={`/cast/${cast}`}>{cast}</Link>
+                </span>
+              );
+            })}
+          </div>
         </div>
         {movie.extract && (
-          <>
+          <div className="relative overflow-clip">
             <div
-              className={`overflow-clip transition-height duration-1000 ${
+              className={`relative transition-height duration-1000 ${
                 extractExpanded ? `h-[${expandedHeight}px]` : "h-[200px]"
               }`}
             >
               <p
                 ref={extractRef}
-                className={`mb-3 font-normal text-gray-700 dark:text-gray-400`}
+                className={`mb-3 font-normal text-gray-700 dark:text-gray-400 z-0`}
               >
                 {movie.extract}
               </p>
             </div>
             {/* TODO: change 300 to dynamically calculated based on div and p heights */}
             {movie.extract.length > 300 && (
-              <div className="flex justify-end">
+              <div className="relative flex justify-end items-end bg-gradient-to-b from-20% from-transparent via-75% via-slate-800 to-slate-800 h-12">
                 <span
                   className="cursor-pointer"
                   onClick={() => {
@@ -71,7 +101,7 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
                 </span>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
