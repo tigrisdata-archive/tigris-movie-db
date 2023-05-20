@@ -43,6 +43,10 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
             <GenreIcon />
           </span>
           <div className="flex gap-3 flex-wrap text-xs items-center">
+            {!movie.genres ||
+              (movie.genres.length === 0 && (
+                <span className="align-middle h-3">Uncategorized</span>
+              ))}
             {movie.genres?.map((genre) => {
               return (
                 <span key={genre} className="align-middle h-3">
@@ -57,6 +61,10 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
             <StarIcon />
           </span>
           <div className="flex gap-3 flex-wrap text-xs items-center mt-[6px]">
+            {!movie.cast ||
+              (movie.cast.length === 0 && (
+                <span className="align-middle h-3">Unknown</span>
+              ))}
             {movie.cast?.map((cast) => {
               return (
                 <span key={cast} className="align-middle h-3">
