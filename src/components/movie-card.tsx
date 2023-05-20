@@ -67,22 +67,22 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
           </div>
         </div>
         {movie.extract && (
-          <>
+          <div className="relative overflow-clip">
             <div
-              className={`overflow-clip transition-height duration-1000 ${
+              className={`relative transition-height duration-1000 ${
                 extractExpanded ? `h-[${expandedHeight}px]` : "h-[200px]"
               }`}
             >
               <p
                 ref={extractRef}
-                className={`mb-3 font-normal text-gray-700 dark:text-gray-400`}
+                className={`mb-3 font-normal text-gray-700 dark:text-gray-400 z-0`}
               >
                 {movie.extract}
               </p>
             </div>
             {/* TODO: change 300 to dynamically calculated based on div and p heights */}
             {movie.extract.length > 300 && (
-              <div className="flex justify-end">
+              <div className="relative flex justify-end items-end bg-gradient-to-b from-20% from-transparent via-75% via-slate-800 to-slate-800 h-12">
                 <span
                   className="cursor-pointer"
                   onClick={() => {
@@ -93,7 +93,7 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
                 </span>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
