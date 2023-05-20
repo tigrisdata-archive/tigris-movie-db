@@ -13,7 +13,7 @@ export default async function Genre({
     <SearchPage
       pageNumber={params.page}
       query={params.q}
-      genre={params.genre}
+      genre={decodeURIComponent(params.genre)}
     />
   );
 }
