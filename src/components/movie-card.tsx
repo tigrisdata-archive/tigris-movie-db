@@ -4,6 +4,8 @@ import { Movie } from "@/db/models/movie";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ImageWithFallback } from "./image-with-fallback";
+import { GenreIcon } from "@/icons/genre-icon";
+import { StarIcon } from "@/icons/star-icon";
 
 export const MovieCard = ({ movie }: { movie: Movie }) => {
   const [extractExpanded, setExtractExpanded] = useState<boolean>(false);
@@ -36,14 +38,33 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
             {movie.title} ({movie.year})
           </h2>
         </a>
-        <div className="flex gap-3 text-xs mb-2">
-          {movie.genres?.map((genre) => {
-            return (
-              <span key={genre}>
-                <Link href={`/genre/${genre}`}>{genre}</Link>
-              </span>
-            );
-          })}
+        <div className="flex flex-row justify-left gap-3 mb-2">
+          <span className="text-cyan-500">
+            <GenreIcon />
+          </span>
+          <div className="flex gap-3 flex-wrap text-xs items-center">
+            {movie.genres?.map((genre) => {
+              return (
+                <span key={genre} className="align-middle h-3">
+                  <Link href={`/genre/${genre}`}>{genre}</Link>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+        <div className="flex flex-row justify-left gap-3 mb-4">
+          <span className="text-cyan-500">
+            <StarIcon />
+          </span>
+          <div className="flex gap-3 flex-wrap text-xs items-center mt-[6px]">
+            {movie.cast?.map((cast) => {
+              return (
+                <span key={cast} className="align-middle h-3">
+                  <Link href={`/cast/${cast}`}>{cast}</Link>
+                </span>
+              );
+            })}
+          </div>
         </div>
         {movie.extract && (
           <>
