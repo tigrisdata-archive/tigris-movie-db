@@ -1,9 +1,9 @@
 "use client";
 
 import { Movie } from "@/db/models/movie";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ImageWithFallback } from "./image-with-fallback";
 
 export const MovieCard = ({ movie }: { movie: Movie }) => {
   const [extractExpanded, setExtractExpanded] = useState<boolean>(false);
@@ -20,9 +20,10 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex align-middle justify-center h-[385px] overflow-hidden">
         <a className="p-4" href={`#${movie.href}`}>
-          <Image
+          <ImageWithFallback
             className="rounded-t-lg"
             src={movie.thumbnail || `/no-image-available.svg`}
+            fallback="/no-image-available.svg"
             width={Number(movie.thumbnail_width || 260)}
             height={Number(movie.thumbnail_height || 385)}
             alt={`Thumbnail for ${movie.title}`}
