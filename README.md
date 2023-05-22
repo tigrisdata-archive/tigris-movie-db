@@ -3,6 +3,8 @@
 An example of using Tigris Database + Search with a Movie dataset. Built with
 Next.js and Tailwind CSS.
 
+https://github.com/tigrisdata-community/tigris-movie-db/assets/328367/552fefe0-0cee-4569-ad97-af9a2b9e67b3
+
 The application loads 35,000 movies into a Tigris Database `movies` collection,
 automatically creating a Tigris Search index for the collection, enabling search
 functionality in the application.

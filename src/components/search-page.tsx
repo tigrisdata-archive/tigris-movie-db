@@ -3,7 +3,6 @@ import { Filterlist } from "@/components/filter-list";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { MovieCard } from "@/components/movie-card";
-import { Movie } from "@/db/models/movie";
 import { searchMovies } from "@/utils/search-movies";
 import Link from "next/link";
 
@@ -40,12 +39,12 @@ export default async function SearchPage(props: SearchPageProps) {
         <form
           method="GET"
           action="/"
-          className="flex w-full text-lg text-gray-950 space-x-4"
+          className="flex flex-col lg:flex-row text-lg text-gray-950 space-y-4 lg:space-x-4 lg:space-y-0"
         >
           <input
             type="text"
             name="q"
-            placeholder="Search..."
+            placeholder="Search: term, cast, genre..."
             defaultValue={searchTerm}
             className="p-4 rounded-lg grow"
           />
@@ -80,7 +79,7 @@ export default async function SearchPage(props: SearchPageProps) {
           {props.genre && <span> &gt; Genre &gt; {props.genre}</span>}
           {props.cast && <span> &gt; Cast &gt; {props.cast}</span>}
         </h2>
-        <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
           {movies.length === 0 && (
             <div>
               <p>No movies found matching:</p>
