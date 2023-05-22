@@ -9,13 +9,14 @@ The application loads 35,000 movies into a Tigris Database `movies` collection,
 automatically creating a Tigris Search index for the collection, enabling search
 functionality in the application.
 
-The repo contains two branches:
+The repo contains three branches:
 
-1. [`main`](tree/main) - the branch with Database to Search in place with the
+1. [`main`](https://github.com/tigrisdata-community/tigris-movie-db/tree/main) - the branch with Database to Search in place with the
    application refactored and optimized to show best practices with Tigris and
    Next.js.
-2. [`db-only`](tree/db-only) - the application with just the basic database
+2. [`db-only`](https://github.com/tigrisdata-community/tigris-movie-db/tree/db-only) - the application with just the basic database
    functionality. The application is in a raw state and has not been refactored.
+3. [`next`](https://github.com/tigrisdata-community/tigris-movie-db/tree/next) - working branch for updates to be merged into `main`.
 
 ## Install dependencies
 
