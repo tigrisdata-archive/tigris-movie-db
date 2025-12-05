@@ -1,3 +1,8 @@
+> ⚠️ **This repository is archived.**
+>
+> Tigris has pivoted from this database project to a new, globally distributed S3-compatible object storage service.
+> Learn more about the new product here: https://www.tigrisdata.com/
+
 # Tigris Movie Database
 
 An example of using Tigris Database + Search with a Movie dataset. Built with
